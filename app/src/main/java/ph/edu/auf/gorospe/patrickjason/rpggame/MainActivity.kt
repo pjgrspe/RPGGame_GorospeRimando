@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hero: Hero
     private lateinit var enemy: Enemy
     private lateinit var game: Game
+    private lateinit var tvActions: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         game = Game(hero, enemy)
 
         val tvGameState: TextView = findViewById(R.id.tvGameState)
+        tvActions = findViewById(R.id.tvActions)
         val btnAttack: Button = findViewById(R.id.btnAttack)
         val btnDefend: Button = findViewById(R.id.btnDefend)
         val btnHeal: Button = findViewById(R.id.btnHeal)
@@ -34,15 +36,18 @@ class MainActivity : AppCompatActivity() {
             val damage = hero.attack(enemy)
             enemy.defend(damage)
             updateGameState(tvGameState)
+            updateActions("Hero attacked Enemy for $damage damage")
         }
 
         btnDefend.setOnClickListener {
             // Implement defend logic
+            updateActions("Hero defended")
         }
 
         btnHeal.setOnClickListener {
             hero.heal()
             updateGameState(tvGameState)
+            updateActions("Hero healed")
         }
 
         updateGameState(tvGameState)
@@ -51,5 +56,9 @@ class MainActivity : AppCompatActivity() {
     private fun updateGameState(tvGameState: TextView) {
         val gameState = "Hero HP: ${hero.stats.hp} | Enemy HP: ${enemy.stats.hp}"
         tvGameState.text = gameState
+    }
+
+    private fun updateActions(action: String) {
+        tvActions.text = action
     }
 }

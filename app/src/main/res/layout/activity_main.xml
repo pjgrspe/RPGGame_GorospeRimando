@@ -12,7 +12,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LIWANAG VS KADILIMAN"
+        android:text="@string/liwanag_vs_kadiliman"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/hero"
-                android:contentDescription="Hero Image" />
+                android:contentDescription="@string/hero_image" />
 
             <TextView
                 android:id="@+id/tvHeroName"
@@ -87,7 +87,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/enemy"
-                android:contentDescription="Enemy Image" />
+                android:contentDescription="@string/enemy_image" />
 
             <TextView
                 android:id="@+id/tvEnemyName"
@@ -135,10 +135,10 @@
 
     <ImageView
         android:id="@+id/ivTurnIndicator"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="120dp"
-        android:src="@drawable/hero_fighting"
-        android:contentDescription="Turn Indicator"
+        android:src="@drawable/enemy_fighting"
+        android:contentDescription="@string/turn_indicator"
         app:layout_constraintTop_toBottomOf="@id/tvTurnIndicator"
         app:layout_constraintBottom_toTopOf="@id/tvActions"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
-        android:text="Actions and Effects"
+        android:text="@string/actions_and_effects"
         android:textSize="16sp"
         android:textColor="#2C3E50"
         app:layout_constraintTop_toBottomOf="@id/divider3"
@@ -193,7 +193,7 @@
             android:id="@+id/tvGameState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Game State"
+            android:text="@string/game_state"
             android:layout_gravity="center_horizontal"
             android:textColor="#2C3E50"
             android:layout_marginTop="8dp"
@@ -204,7 +204,7 @@
             android:id="@+id/btnAttack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Attack"
+            android:text="@string/attack"
             android:textColor="#FFFFFF"
             app:cornerRadius="16dp"
             app:backgroundTint="#E74C3C"
@@ -216,7 +216,7 @@
             android:id="@+id/btnDefend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Defend"
+            android:text="@string/defend"
             android:textColor="#FFFFFF"
             app:cornerRadius="16dp"
             app:backgroundTint="#3498DB"
@@ -228,7 +228,7 @@
             android:id="@+id/btnHeal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Heal"
+            android:text="@string/heal"
             android:textColor="#FFFFFF"
             app:cornerRadius="16dp"
             app:backgroundTint="#2ECC71"
