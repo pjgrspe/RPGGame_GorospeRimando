@@ -8,6 +8,7 @@
     tools:context=".MainActivity"
     android:padding="16dp">
 
+    <!-- Title TextView -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -21,8 +22,9 @@
         android:textStyle="bold"
         android:textColor="#2C3E50" />
 
+    <!-- Section Divider -->
     <View
-        android:id="@+id/divider1"
+        android:id="@+id/sectionDivider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
@@ -31,12 +33,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
+    <!-- Hero and Enemy Section -->
     <LinearLayout
         android:id="@+id/hero_enemy_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/divider1"
+        app:layout_constraintTop_toBottomOf="@id/sectionDivider1"
         android:layout_marginTop="16dp"
         android:baselineAligned="false"
         android:layout_marginBottom="16dp">
@@ -110,113 +113,127 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Turn Indicator Divider -->
     <View
-        android:id="@+id/divider2"
+        android:id="@+id/sectionDivider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintTop_toBottomOf="@id/hero_enemy_section"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp" />
 
-    <!-- Turn Indicator TextView -->
-    <TextView
-        android:id="@+id/tvTurnIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/battle_area"
-        android:textSize="16sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/divider2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="5dp"
-        android:textColor="#2C3E50" />
-
-    <!-- Turn Indicator ImageView -->
-    <ImageView
-        android:id="@+id/ivTurnIndicator"
-        android:layout_width="200dp"
-        android:layout_height="120dp"
-        android:src="@drawable/enemy_fighting"
-        android:contentDescription="@string/turn_indicator"
-        app:layout_constraintTop_toBottomOf="@id/tvTurnIndicator"
-        app:layout_constraintBottom_toTopOf="@id/tvActions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="5dp" />
-
-    <!-- Hero Action Effect on Turn Indicator -->
-    <ImageView
-        android:id="@+id/ivHeroActionEffect"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:contentDescription="@string/hero_action_effect"
-        app:layout_constraintTop_toTopOf="@id/ivTurnIndicator"
-        app:layout_constraintBottom_toBottomOf="@id/ivTurnIndicator"
-        app:layout_constraintStart_toStartOf="@id/ivTurnIndicator"
-        app:layout_constraintEnd_toEndOf="@id/ivTurnIndicator"
-        android:src="@drawable/attack" />
-
-    <!-- Enemy Action Effect on Turn Indicator -->
-    <ImageView
-        android:id="@+id/ivEnemyActionEffect"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:contentDescription="@string/enemy_action_effect"
-        app:layout_constraintTop_toTopOf="@id/ivTurnIndicator"
-        app:layout_constraintBottom_toBottomOf="@id/ivTurnIndicator"
-        app:layout_constraintStart_toStartOf="@id/ivTurnIndicator"
-        app:layout_constraintEnd_toEndOf="@id/ivTurnIndicator"
-        android:src="@drawable/attack" />
-
-
-    <View
-        android:id="@+id/divider3"
+    <!-- Turn Indicator Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/center_section"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/ivTurnIndicator"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
-
-    <!-- Center Section for Actions and Effects -->
-    <TextView
-        android:id="@+id/tvActions"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:text="@string/actions_and_effects"
-        android:textSize="16sp"
-        android:textColor="#2C3E50"
-        app:layout_constraintTop_toBottomOf="@id/divider3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/tvActions"
+        app:layout_constraintTop_toBottomOf="@id/sectionDivider2"
+        app:layout_constraintBottom_toTopOf="@id/buttons_section"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
 
+        <!-- Turn Indicator TextView -->
+        <TextView
+            android:id="@+id/tvTurnIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/battle_area"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"
+            android:textColor="#2C3E50" />
+
+        <!-- Turn Indicator ImageView -->
+        <ImageView
+            android:id="@+id/ivTurnIndicator"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:src="@drawable/enemy_fighting"
+            android:contentDescription="@string/turn_indicator"
+            app:layout_constraintTop_toBottomOf="@id/tvTurnIndicator"
+            app:layout_constraintBottom_toTopOf="@id/tvActions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="5dp" />
+
+        <!-- Hero Action Effect on Turn Indicator -->
+        <ImageView
+            android:id="@+id/ivHeroActionEffect"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:contentDescription="@string/hero_action_effect"
+            app:layout_constraintTop_toTopOf="@id/ivTurnIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/ivTurnIndicator"
+            app:layout_constraintStart_toStartOf="@id/ivTurnIndicator"
+            app:layout_constraintEnd_toEndOf="@id/ivTurnIndicator"
+            android:src="@drawable/attack" />
+
+        <!-- Enemy Action Effect on Turn Indicator -->
+        <ImageView
+            android:id="@+id/ivEnemyActionEffect"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:contentDescription="@string/enemy_action_effect"
+            app:layout_constraintTop_toTopOf="@id/ivTurnIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/ivTurnIndicator"
+            app:layout_constraintStart_toStartOf="@id/ivTurnIndicator"
+            app:layout_constraintEnd_toEndOf="@id/ivTurnIndicator"
+            android:src="@drawable/attack" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/ivTurnIndicator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <!-- Center Section for Actions and Effects -->
+        <TextView
+            android:id="@+id/tvActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/actions_and_effects"
+            android:textSize="16sp"
+            android:textColor="#2C3E50"
+            app:layout_constraintTop_toBottomOf="@id/divider3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/tvActions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Buttons Section -->
     <LinearLayout
         android:id="@+id/buttons_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="16dp"
-        app:layout_constraintTop_toBottomOf="@id/divider4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
