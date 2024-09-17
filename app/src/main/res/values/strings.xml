@@ -9,4 +9,11 @@
     <string name="attack">Attack</string>
     <string name="game_state">Game State</string>
     <string name="actions_and_effects">Actions and Effects</string>
+    <string name="enemy_action_effect">Enemy Action Effect</string>
+    <string name="hero_action_effect">Hero Action Effect</string>
+    <string name="hero_name">Hero Name</string>
+    <string name="hp_100_nattack_20_ndefense_10">HP: 100\nAttack: 20\nDefense: 10</string>
+    <string name="enemy_name">Enemy Name</string>
+    <string name="hp_100_nattack_20_ndefense_10_enemy">HP: 100\nAttack: 20\nDefense: 10</string>
+    <string name="battle_area">Battle Area</string>
 </resources>

@@ -38,6 +38,7 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/divider1"
         android:layout_marginTop="16dp"
+        android:baselineAligned="false"
         android:layout_marginBottom="16dp">
 
         <!-- Hero Section -->
@@ -59,7 +60,7 @@
                 android:id="@+id/tvHeroName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hero Name"
+                android:text="@string/hero_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
@@ -69,7 +70,7 @@
                 android:id="@+id/tvHeroAttributes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HP: 100\nAttack: 20\nDefense: 10"
+                android:text="@string/hp_100_nattack_20_ndefense_10"
                 android:layout_marginTop="4dp"
                 android:textColor="#7F8C8D" />
         </LinearLayout>
@@ -93,7 +94,7 @@
                 android:id="@+id/tvEnemyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enemy Name"
+                android:text="@string/enemy_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
@@ -103,7 +104,7 @@
                 android:id="@+id/tvEnemyAttributes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HP: 100\nAttack: 20\nDefense: 10"
+                android:text="@string/hp_100_nattack_20_ndefense_10_enemy"
                 android:layout_marginTop="4dp"
                 android:textColor="#7F8C8D" />
         </LinearLayout>
@@ -124,7 +125,7 @@
         android:id="@+id/tvTurnIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Turn Indicator"
+        android:text="@string/battle_area"
         android:textSize="16sp"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/divider2"
@@ -133,6 +134,7 @@
         android:layout_marginTop="5dp"
         android:textColor="#2C3E50" />
 
+    <!-- Turn Indicator ImageView -->
     <ImageView
         android:id="@+id/ivTurnIndicator"
         android:layout_width="200dp"
@@ -142,8 +144,37 @@
         app:layout_constraintTop_toBottomOf="@id/tvTurnIndicator"
         app:layout_constraintBottom_toTopOf="@id/tvActions"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="5dp" />
+
+    <!-- Hero Action Effect on Turn Indicator -->
+    <ImageView
+        android:id="@+id/ivHeroActionEffect"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:contentDescription="@string/hero_action_effect"
+        app:layout_constraintTop_toTopOf="@id/ivTurnIndicator"
+        app:layout_constraintBottom_toBottomOf="@id/ivTurnIndicator"
+        app:layout_constraintStart_toStartOf="@id/ivTurnIndicator"
+        app:layout_constraintEnd_toEndOf="@id/ivTurnIndicator"
+        android:src="@drawable/attack" />
+
+    <!-- Enemy Action Effect on Turn Indicator -->
+    <ImageView
+        android:id="@+id/ivEnemyActionEffect"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:contentDescription="@string/enemy_action_effect"
+        app:layout_constraintTop_toTopOf="@id/ivTurnIndicator"
+        app:layout_constraintBottom_toBottomOf="@id/ivTurnIndicator"
+        app:layout_constraintStart_toStartOf="@id/ivTurnIndicator"
+        app:layout_constraintEnd_toEndOf="@id/ivTurnIndicator"
+        android:src="@drawable/attack" />
+
 
     <View
         android:id="@+id/divider3"
