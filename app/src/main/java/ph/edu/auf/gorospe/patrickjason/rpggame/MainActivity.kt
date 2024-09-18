@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), GameCallback {
             tvEnemyName.text = enemy.name
             tvEnemyAttributes.text = "HP: ${enemy.stats.hp}\nAttack: ${enemy.stats.attack}\nDefense: ${enemy.stats.def}"
 
-            updateHeroXpBar(hero.stats.xp) // Ensure XP bar is updated
+            updateHeroXpBar() // Ensure XP bar is updated
         }
     }
 
@@ -167,6 +167,7 @@ class MainActivity : AppCompatActivity(), GameCallback {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun resetGame() {
         CharacterConfig.heroStats.reset()
         CharacterConfig.enemyStats.reset()
@@ -185,7 +186,8 @@ class MainActivity : AppCompatActivity(), GameCallback {
         btnHeal.isEnabled = enabled
     }
 
-    private fun updateHeroXpBar(heroXp: Int) {
+    @SuppressLint("SetTextI18n")
+    private fun updateHeroXpBar() {
         while (hero.stats.xp >= 100) {
             hero.stats.xp -= 100
             hero.stats.level += 1

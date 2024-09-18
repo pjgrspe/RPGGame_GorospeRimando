@@ -56,8 +56,6 @@ abstract class Character(
         return healAmount
     }
 
-    fun isAlive(): Boolean = stats.hp > 0
-
     override fun chooseAction(opponent: Character): String {
         val hpPercentage = stats.hp / 100.0
         val opponentHpPercentage = opponent.stats.hp / 100.0

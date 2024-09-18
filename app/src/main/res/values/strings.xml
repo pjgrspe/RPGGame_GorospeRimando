@@ -16,4 +16,5 @@
     <string name="enemy_name">Enemy Name</string>
     <string name="hp_100_nattack_20_ndefense_10_enemy">HP: 100\nAttack: 20\nDefense: 10</string>
     <string name="battle_area">Battle Area</string>
+    <string name="level_1">Level: 1</string>
 </resources>
