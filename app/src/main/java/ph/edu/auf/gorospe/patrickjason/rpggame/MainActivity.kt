@@ -7,12 +7,13 @@ import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity(), GameCallback {
 
-    private lateinit var tvGameState: TextView
     private lateinit var tvActions: TextView
     private lateinit var tvHeroName: TextView
     private lateinit var tvHeroAttributes: TextView
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity(), GameCallback {
     private lateinit var btnHeal: Button
     private lateinit var ivHeroAction: ImageView
     private lateinit var ivEnemyAction: ImageView
+    private lateinit var pbHeroXp: ProgressBar
+    private lateinit var tvHeroLevel: TextView
     private lateinit var hero: Hero
     private lateinit var enemy: Enemy
     private lateinit var game: Game
@@ -33,7 +36,6 @@ class MainActivity : AppCompatActivity(), GameCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvGameState = findViewById(R.id.tvGameState)
         tvActions = findViewById(R.id.tvActions)
         ivTurnIndicator = findViewById(R.id.ivTurnIndicator)
         ivHeroAction = findViewById(R.id.ivHeroActionEffect)
@@ -42,6 +44,8 @@ class MainActivity : AppCompatActivity(), GameCallback {
         tvHeroAttributes = findViewById<TextView>(R.id.tvHeroAttributes)
         tvEnemyName = findViewById<TextView>(R.id.tvEnemyName)
         tvEnemyAttributes = findViewById<TextView>(R.id.tvEnemyAttributes)
+        pbHeroXp = findViewById(R.id.pbHeroXp)
+        tvHeroLevel = findViewById(R.id.tvHeroLevel)
 
         // Initialize buttons
         btnAttack = findViewById(R.id.btnAttack)
@@ -67,35 +71,33 @@ class MainActivity : AppCompatActivity(), GameCallback {
         }
     }
 
-    // Helper method to perform the hero action and disable buttons after the first click
+    // Perform hero action with a single click
     private fun performHeroActionWithSingleClick(action: String) {
         // Disable buttons right after an action is performed
         setButtonsEnabled(false)
         game.performHeroAction(action)
     }
 
-    // Update the game state (HP of both characters)
+    //Update the game state
     @SuppressLint("SetTextI18n")
     override fun onGameStateUpdate(heroHp: Double, enemyHp: Double) {
         runOnUiThread {
-            val gameState = "Hero HP: $heroHp | Enemy HP: $enemyHp"
-            tvGameState.text = gameState
-
-            // Update the hero and enemy sections
             tvHeroName.text = hero.name
             tvHeroAttributes.text = "HP: ${hero.stats.hp}\nAttack: ${hero.stats.attack}\nDefense: ${hero.stats.def}"
 
             tvEnemyName.text = enemy.name
             tvEnemyAttributes.text = "HP: ${enemy.stats.hp}\nAttack: ${enemy.stats.attack}\nDefense: ${enemy.stats.def}"
+
+            updateHeroXpBar(hero.stats.xp) // Ensure XP bar is updated
         }
     }
 
-    // Display the action that was performed by the hero or enemy
+    //Display the action that was performed by the hero or enemy
     override fun onActionUpdate(action: String) {
         runOnUiThread {
             tvActions.text = action
 
-            // Show action image for hero or enemy depending on the action
+            //Show action image
             when {
                 action.contains("Hero attacks") -> {
                     showActionImage(ivHeroAction, R.drawable.attack)
@@ -123,22 +125,32 @@ class MainActivity : AppCompatActivity(), GameCallback {
         imageView.setImageResource(drawableRes)
         imageView.visibility = View.VISIBLE
 
-        // Hide the image after 2 seconds
+        //Hide the image after 2 seconds
         handler.postDelayed({
             imageView.visibility = View.GONE
         }, 2000)
     }
 
-    // Display the winner of the game
     @SuppressLint("SetTextI18n")
     override fun onGameEnd(winner: String) {
         runOnUiThread {
             tvActions.text = "$winner wins!"
             setButtonsEnabled(false)
+
+            //Show a dialog to reset the game
+            AlertDialog.Builder(this)
+                .setTitle("Game Over")
+                .setMessage("$winner wins! Do you want to play again?")
+                .setPositiveButton("Yes") { _, _ ->
+                    resetGame()
+
+                }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 
-    // Indicate whose turn it is (hero or enemy) and enable/disable buttons accordingly
+    //Indicate whose turn it is (hero or enemy) and enable/disable buttons accordingly
     @SuppressLint("SetTextI18n")
     override fun onTurnChange(turn: String) {
         runOnUiThread {
@@ -147,19 +159,40 @@ class MainActivity : AppCompatActivity(), GameCallback {
 
             if (turn == "hero") {
                 tvActions.text = "Your turn! Choose an action."
-                setButtonsEnabled(true) // Enable buttons when it's the hero's turn
+                setButtonsEnabled(true) //Enable buttons when it's the hero's turn
             } else {
                 tvActions.text = "Enemy's turn!"
-                setButtonsEnabled(false) // Disable buttons during the enemy's turn
+                setButtonsEnabled(false) //Disable buttons during the enemy's turn
             }
         }
     }
 
-    // Helper method to enable/disable all buttons at once
+    private fun resetGame() {
+        CharacterConfig.heroStats.reset()
+        CharacterConfig.enemyStats.reset()
+        hero = Hero(CharacterConfig.heroName, CharacterConfig.heroStats)
+        enemy = Enemy(CharacterConfig.enemyName, CharacterConfig.enemyStats)
+        game = Game(hero, enemy, this)
+        game.start()
+        setButtonsEnabled(true)
+        tvActions.text = "Game reset! Your turn! Choose an action."
+    }
+
+    //enable/disable all buttons at once
     private fun setButtonsEnabled(enabled: Boolean) {
         btnAttack.isEnabled = enabled
         btnDefend.isEnabled = enabled
         btnHeal.isEnabled = enabled
+    }
+
+    private fun updateHeroXpBar(heroXp: Int) {
+        while (hero.stats.xp >= 100) {
+            hero.stats.xp -= 100
+            hero.stats.level += 1
+            hero.stats.hp += 20 // Add health when leveling up
+        }
+        pbHeroXp.progress = hero.stats.xp
+        tvHeroLevel.text = "Level: ${hero.stats.level}"
     }
 }
 

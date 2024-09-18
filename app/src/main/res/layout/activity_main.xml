@@ -33,13 +33,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
+    <!-- XP Level Bar for Hero -->
+    <!-- XP Level Bar for Hero -->
+    <ProgressBar
+        android:id="@+id/pbHeroXp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:progress="50"
+        android:max="100"
+        android:progressTint="#FFD700"
+        app:layout_constraintTop_toBottomOf="@id/sectionDivider1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <!-- Hero Level TextView -->
+    <TextView
+        android:id="@+id/tvHeroLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Level: 1"
+        android:textSize="16sp"
+        android:textColor="#34495E"
+        app:layout_constraintTop_toBottomOf="@id/pbHeroXp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"/>
+
     <!-- Hero and Enemy Section -->
     <LinearLayout
         android:id="@+id/hero_enemy_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/sectionDivider1"
+        app:layout_constraintTop_toBottomOf="@id/pbHeroXp"
         android:layout_marginTop="16dp"
         android:baselineAligned="false"
         android:layout_marginBottom="16dp">
@@ -236,16 +266,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/tvGameState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/game_state"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#2C3E50"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp" />
 
         <!-- Modernized Buttons with Rounded Corners -->
         <com.google.android.material.button.MaterialButton
