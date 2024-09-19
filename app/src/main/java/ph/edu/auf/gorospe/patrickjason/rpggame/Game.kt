@@ -29,50 +29,47 @@ class Game(private val hero: Hero, private val enemy: Enemy, private val callbac
     fun performHeroAction(action: String) {
 
         if (gameEnded) return //Check if the game has ended
-        callback.onActionUpdate("Hero chooses to $action")
-        Handler(Looper.getMainLooper()).postDelayed({
-            when (action) {
-                "attack" -> {
-                    val damage = hero.attack(enemy)    // Hero attacks and deals damage
-                    val diceRoll = (1..10).random()
-                    val actualDamage: Double
-                    when (diceRoll){
-                        10 -> {
-                            actualDamage = enemy.defend(damage * 2)
-                            callback.onActionUpdate("Hero attacks! Critical hit! Deals $actualDamage damage to the enemy.")
-                        }
-                        1 -> {
-                            callback.onActionUpdate("Hero attacks! Missed!")
-                        }
-                        else -> {
-                            actualDamage = enemy.defend(damage)
-                            callback.onActionUpdate("Hero attacks! Deals $actualDamage damage to the enemy.")
-                        }
+        when (action) {
+            "attack" -> {
+                val damage = hero.attack(enemy)    // Hero attacks and deals damage
+                val diceRoll = (1..10).random()
+                val actualDamage: Double
+                when (diceRoll){
+                    10 -> {
+                        actualDamage = enemy.defend(damage * 2)
+                        callback.onActionUpdate("Hero attacks! Critical hit! Deals $actualDamage damage to the enemy.")
                     }
-                }
-                "defend" -> {
-                    if (heroDefenseTurns > 0) {
-                        callback.onActionUpdate("Hero is already defending!")
-                    } else {
-                        heroDefenseTurns = (1..4).random() // Randomize defense turns
-                        hero.stats.def += 20                    // Hero increases defense
-                        callback.onActionUpdate("Hero defends! Defense increased by 20. for $heroDefenseTurns turns")
+                    1 -> {
+                        callback.onActionUpdate("Hero attacks! Missed!")
                     }
-                }
-                "heal" -> {
-                    if (hero.stats.hp >= CharacterConfig.maxHealth) {
-                        callback.onActionUpdate("Hero is already at full health!")
-                        return@postDelayed
+                    else -> {
+                        actualDamage = enemy.defend(damage)
+                        callback.onActionUpdate("Hero attacks! Deals $actualDamage damage to the enemy.")
                     }
-                    val healAmount = hero.heal()       // Hero heals
-                    callback.onActionUpdate("Hero heals for $healAmount HP.")
-                }
-                else -> {
-                    callback.onActionUpdate("Invalid action!")
-                    return@postDelayed
                 }
             }
-        }, 1500)
+            "defend" -> {
+                if (heroDefenseTurns > 0) {
+                    callback.onActionUpdate("Hero is already defending!")
+                } else {
+                    heroDefenseTurns = (1..4).random() // Randomize defense turns
+                    hero.stats.def += 20                    // Hero increases defense
+                    callback.onActionUpdate("Hero defends! Defense increased by 20. for $heroDefenseTurns turns")
+                }
+            }
+            "heal" -> {
+                if (hero.stats.hp >= CharacterConfig.maxHealth) {
+                    callback.onActionUpdate("Hero is already at full health!")
+                    return
+                }
+                val healAmount = hero.heal()       // Hero heals
+                callback.onActionUpdate("Hero heals for $healAmount HP.")
+            }
+            else -> {
+                callback.onActionUpdate("Invalid action!")
+                return
+            }
+        }
 
         callback.onGameStateUpdate(hero.stats.hp, enemy.stats.hp)
         //Delay the switch
@@ -99,47 +96,43 @@ class Game(private val hero: Hero, private val enemy: Enemy, private val callbac
         }
 
         //Enemy AI decides action
-       val action = enemy.chooseAction(hero)
-        callback.onActionUpdate("Enemy chooses to $action")
-        Handler(Looper.getMainLooper()).postDelayed({
-            when (action) {
-                "attack" -> {
-                    val damage = enemy.attack(hero)    // Enemy attacks and deals damage
-                    val diceRoll = (1..10).random()
-                    val actualDamage: Double
-                    when (diceRoll) {
-                        10 -> {
-                            actualDamage = hero.defend(damage * 2)
-                            callback.onActionUpdate("Enemy attacks! Critical hit! Deals $actualDamage damage to the hero.")
-                        }
-                        1 -> {
-                            callback.onActionUpdate("Enemy attacks! Missed!")
-                        }
-                        else -> {
-                            actualDamage = hero.defend(damage)
-                            callback.onActionUpdate("Enemy attacks! Deals $actualDamage damage to the hero.")
-                        }
+        val action = enemy.chooseAction(hero)
+        when (action) {
+            "attack" -> {
+                val damage = enemy.attack(hero)    // Enemy attacks and deals damage
+                val diceRoll = (1..10).random()
+                val actualDamage: Double
+                when (diceRoll) {
+                    10 -> {
+                        actualDamage = hero.defend(damage * 2)
+                        callback.onActionUpdate("Enemy attacks! Critical hit! Deals $actualDamage damage to the hero.")
                     }
-                }
-                "defend" ->
-                    if (enemyDefenseTurns > 0) {
-                        callback.onActionUpdate("Enemy is already defending!")
-                    } else {
-                        enemyDefenseTurns = (1..4).random() // Randomize defense turns
-                        enemy.stats.def += 20                    // Hero increases defense
-                        callback.onActionUpdate("Enemy defends! Defense increased by 20. for $enemyDefenseTurns turns")
+                    1 -> {
+                        callback.onActionUpdate("Enemy attacks! Missed!")
                     }
-                "heal" -> {
-                    if (enemy.stats.hp >= CharacterConfig.maxHealth) {
-                        callback.onActionUpdate("Enemy is already at full health!")
-                        return@postDelayed
+                    else -> {
+                        actualDamage = hero.defend(damage)
+                        callback.onActionUpdate("Enemy attacks! Deals $actualDamage damage to the hero.")
                     }
-                    val healAmount = enemy.heal()      // Enemy heals
-                    callback.onActionUpdate("Enemy heals for $healAmount HP.")
                 }
             }
-            callback.onGameStateUpdate(hero.stats.hp, enemy.stats.hp)
-        }, 1500)
+            "defend" ->
+                if (enemyDefenseTurns > 0) {
+                    callback.onActionUpdate("Enemy is already defending!")
+                } else {
+                    enemyDefenseTurns = (1..4).random() // Randomize defense turns
+                    enemy.stats.def += 20                    // Hero increases defense
+                    callback.onActionUpdate("Enemy defends! Defense increased by 20. for $enemyDefenseTurns turns")
+                }
+            "heal" -> {
+                if (enemy.stats.hp >= CharacterConfig.maxHealth) {
+                    callback.onActionUpdate("Enemy is already at full health!")
+                    return
+                }
+                val healAmount = enemy.heal()      // Enemy heals
+                callback.onActionUpdate("Enemy heals for $healAmount HP.")
+            }
+        }
 
         callback.onGameStateUpdate(hero.stats.hp, enemy.stats.hp)
         //Delay turn switching
